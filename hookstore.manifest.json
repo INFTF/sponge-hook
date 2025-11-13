@@ -32,7 +32,7 @@
       "id": "main",
       "artifact": {
         "toolchain": "hooks-c",
-        "source_path": "src/param_sponge_blob.c"
+        "source_path": "src/sponge.c"
       },
       "HookOn": ["INVOKE"],
       "HookCanEmit": [],
