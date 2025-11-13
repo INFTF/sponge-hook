@@ -408,7 +408,6 @@
               "label": "New tp_sender Account",
               "inputType": "account",
               "encoding": "hex",
-              "default": "rNybLYJ4koM8PF3dJbyUZhrgYntGxf1nEk",
               "description": "New account to store in tp_sender state (AccountID).",
               "required": true
             },
@@ -416,7 +415,6 @@
               "label": "New tp_count Value",
               "inputType": "string",
               "encoding": "utf8",
-              "default": "100",
               "description": "New numeric value for tp_count (ascii).",
               "required": true
             },
@@ -424,7 +422,6 @@
               "label": "New tp_label Text",
               "inputType": "string",
               "encoding": "utf8",
-              "default": "Updated label",
               "description": "New text for tp_label.",
               "required": true
             }
@@ -461,7 +458,6 @@
               "label": "Blob Version",
               "inputType": "uint8",
               "encoding": "uint8",
-              "default": "1",
               "description": "Single-byte version in Blob.",
               "required": true
             },
@@ -469,7 +465,6 @@
               "label": "Blob Account",
               "inputType": "account",
               "encoding": "hex",
-              "default": "rNybLYJ4koM8PF3dJbyUZhrgYntGxf1nEk",
               "description": "Account embedded in Blob (stored in blob_account).",
               "required": true
             },
@@ -486,7 +481,6 @@
               "label": "Blob Note",
               "inputType": "string",
               "encoding": "utf8",
-              "default": "Updated blob note",
               "description": "Trailing text stored in blob_note.",
               "required": false
             }
