@@ -182,6 +182,9 @@ sponge-hook/
 │   └── icon.png
 │   └── logo.png
 │
+├── .hookstore/
+│   └── config.json
+│
 └── README.md            ← this file
 ```
 
