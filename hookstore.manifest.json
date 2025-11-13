@@ -37,7 +37,168 @@
       "HookOn": ["INVOKE"],
       "HookCanEmit": [],
       "HookNamespace": "0000000000000000000000000000000000000000000000000000000000000000",
-
+      "abi": {
+        "notes": "Auto-generated from manifest and code analysis",
+        "hookParameters": [
+          {
+            "name": "hp_admin",
+            "selector": [
+              {
+                "type": "VarString",
+                "pattern": "hp_admin",
+                "byteLength": 8,
+                "patternEncoding": "ascii",
+                "exclude": true,
+                "notes": "Parameter name as stored on-ledger"
+              }
+            ],
+            "data": [
+              {
+                "type": "AccountID",
+                "byteLength": 20
+              }
+            ]
+          },
+          {
+            "name": "hp_limit",
+            "selector": [
+              {
+                "type": "VarString",
+                "pattern": "hp_limit",
+                "byteLength": 8,
+                "patternEncoding": "ascii",
+                "exclude": true,
+                "notes": "Parameter name as stored on-ledger"
+              }
+            ],
+            "data": [
+              {
+                "type": "Blob"
+              }
+            ]
+          },
+          {
+            "name": "hp_note",
+            "selector": [
+              {
+                "type": "VarString",
+                "pattern": "hp_note",
+                "byteLength": 7,
+                "patternEncoding": "ascii",
+                "exclude": true,
+                "notes": "Parameter name as stored on-ledger"
+              }
+            ],
+            "data": [
+              {
+                "type": "Blob"
+              }
+            ]
+          }
+        ],
+        "otxnParameters": [
+          {
+            "name": "InvokeBlob",
+            "description": "Blob data from Invoke transaction",
+            "transactionTypes": [
+              "Invoke"
+            ],
+            "selector": [
+              {
+                "type": "VarString",
+                "pattern": "Blob",
+                "exclude": true,
+                "notes": "sfBlob field selector"
+              }
+            ],
+            "data": [
+              {
+                "type": "VarString",
+                "pattern": "CONF",
+                "byteLength": 4,
+                "patternEncoding": "ascii"
+              },
+              {
+                "type": "UInt8"
+              },
+              {
+                "type": "AccountID",
+                "byteLength": 20
+              },
+              {
+                "type": "Blob"
+              },
+              {
+                "type": "Blob"
+              }
+            ]
+          },
+          {
+            "name": "tp_sender",
+            "selector": [
+              {
+                "type": "VarString",
+                "pattern": "tp_sender",
+                "byteLength": 9,
+                "patternEncoding": "ascii",
+                "exclude": true,
+                "notes": "Parameter name as stored on-ledger"
+              }
+            ],
+            "data": [
+              {
+                "type": "AccountID",
+                "byteLength": 20
+              }
+            ],
+            "transactionTypes": [
+              "Invoke"
+            ]
+          },
+          {
+            "name": "tp_count",
+            "selector": [
+              {
+                "type": "VarString",
+                "pattern": "tp_count",
+                "byteLength": 8,
+                "patternEncoding": "ascii",
+                "exclude": true,
+                "notes": "Parameter name as stored on-ledger"
+              }
+            ],
+            "data": [
+              {
+                "type": "Blob"
+              }
+            ],
+            "transactionTypes": [
+              "Invoke"
+            ]
+          },
+          {
+            "name": "tp_label",
+            "selector": [
+              {
+                "type": "VarString",
+                "pattern": "tp_label",
+                "byteLength": 8,
+                "patternEncoding": "ascii",
+                "exclude": true,
+                "notes": "Parameter name as stored on-ledger"
+              }
+            ],
+            "data": [
+              {
+                "type": "Blob"
+              }
+            ],
+            "transactionTypes": [
+              "Invoke"
+            ]
+          }
+        ]
+      },
       "HookParameters": [
         {
           "HookParameterName": "hp_admin",
