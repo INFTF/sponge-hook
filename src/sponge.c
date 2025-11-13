@@ -11,11 +11,13 @@
  *  3) Reads Blob and splits it into multiple fields, storing each as state:
  *
  *     Blob layout (byte offsets):
- *       0..3   : tag (ASCII "CONF", 4 bytes)
- *       4      : version (uint8)
- *       5..24  : account id (20 bytes)
- *       25..32 : limit (uint64, big-endian)
- *       33..N  : note (UTF-8, remaining bytes, optional)
+ *       Note: otxn_field(sfBlob) returns a VarString with a 1-byte length prefix
+ *       0      : length prefix (VarString, 1 byte)
+ *       1..4   : tag (ASCII "CONF", 4 bytes)
+ *       5      : version (uint8)
+ *       6..25  : account id (20 bytes)
+ *       26..33 : limit (uint64, big-endian)
+ *       34..N  : note (UTF-8, remaining bytes, optional)
  *
  *     Stored state keys:
  *       "tp_sender"    -> raw otxn_param bytes
@@ -153,8 +155,8 @@ int64_t hook(uint32_t reserved)
     // ---------------------------------------------------------------
 
     {
-        // 4 tag + 1 ver + 20 acc + 8 limit + up to ~64 note
-        uint8_t blob[4 + 1 + 20 + 8 + 64];
+        // 1 length prefix + 4 tag + 1 ver + 20 acc + 8 limit + up to ~64 note
+        uint8_t blob[1 + 4 + 1 + 20 + 8 + 64];
         int64_t len = otxn_field(SBUF(blob), sfBlob);
 
         if (len > 0)
@@ -162,35 +164,41 @@ int64_t hook(uint32_t reserved)
             TRACESTR("param_sponge_blob: blob present");
             TRACEVAR(len);
 
-            if (len >= 4)
-            {
-                uint8_t key_tag[] = "blob_tag";
-                state_set(blob, 4, key_tag, sizeof(key_tag) - 1);
-            }
-
+            // Skip the VarString length prefix (byte 0)
+            // Tag is at bytes 1-4
             if (len >= 5)
             {
-                uint8_t key_ver[] = "blob_version";
-                state_set(blob + 4, 1, key_ver, sizeof(key_ver) - 1);
+                uint8_t key_tag[] = "blob_tag";
+                state_set(blob + 1, 4, key_tag, sizeof(key_tag) - 1);
             }
 
-            if (len >= 25)
+            // Version is at byte 5
+            if (len >= 6)
+            {
+                uint8_t key_ver[] = "blob_version";
+                state_set(blob + 5, 1, key_ver, sizeof(key_ver) - 1);
+            }
+
+            // Account is at bytes 6-25
+            if (len >= 26)
             {
                 uint8_t key_acc[] = "blob_account";
-                state_set(blob + 5, 20, key_acc, sizeof(key_acc) - 1);
+                state_set(blob + 6, 20, key_acc, sizeof(key_acc) - 1);
             }
 
-            if (len >= 33)
+            // Limit is at bytes 26-33
+            if (len >= 34)
             {
                 uint8_t key_lim[] = "blob_limit";
-                state_set(blob + 25, 8, key_lim, sizeof(key_lim) - 1);
+                state_set(blob + 26, 8, key_lim, sizeof(key_lim) - 1);
             }
 
-            if (len > 33)
+            // Note is at bytes 34+
+            if (len > 34)
             {
-                uint32_t note_len = (uint32_t)(len - 33);
+                uint32_t note_len = (uint32_t)(len - 34);
                 uint8_t key_note[] = "blob_note";
-                state_set(blob + 33, note_len, key_note, sizeof(key_note) - 1);
+                state_set(blob + 34, note_len, key_note, sizeof(key_note) - 1);
             }
         }
         else
