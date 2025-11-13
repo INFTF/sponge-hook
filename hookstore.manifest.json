@@ -48,7 +48,7 @@
                 "byteLength": 8,
                 "patternEncoding": "ascii",
                 "exclude": true
-                            }
+              }
             ],
             "data": [
               {
@@ -372,6 +372,124 @@
           "HookParameterValue": {
             "type": "userConfig",
             "value": "{{hp_note_text}}"
+          }
+        }
+      ],
+      "postInstallSettings": [
+        {
+          "name": "Update TP parameters",
+          "description": "Update tp_sender, tp_count, and tp_label via Invoke (otxn_param test)",
+          "TransactionType": "Invoke",
+          "HookParameters": [
+            {
+              "HookParameterName": "tp_sender",
+              "HookParameterValue": {
+                "type": "userConfig",
+                "value": "{{newSender}}"
+              }
+            },
+            {
+              "HookParameterName": "tp_count",
+              "HookParameterValue": {
+                "type": "userConfig",
+                "value": "{{newCount}}"
+              }
+            },
+            {
+              "HookParameterName": "tp_label",
+              "HookParameterValue": {
+                "type": "userConfig",
+                "value": "{{newLabel}}"
+              }
+            }
+          ],
+          "userConfig": {
+            "newSender": {
+              "label": "New tp_sender Account",
+              "inputType": "account",
+              "encoding": "hex",
+              "default": "rNybLYJ4koM8PF3dJbyUZhrgYntGxf1nEk",
+              "description": "New account to store in tp_sender state (AccountID).",
+              "required": true
+            },
+            "newCount": {
+              "label": "New tp_count Value",
+              "inputType": "string",
+              "encoding": "utf8",
+              "default": "100",
+              "description": "New numeric value for tp_count (ascii).",
+              "required": true
+            },
+            "newLabel": {
+              "label": "New tp_label Text",
+              "inputType": "string",
+              "encoding": "utf8",
+              "default": "Updated label",
+              "description": "New text for tp_label.",
+              "required": true
+            }
+          }
+        },
+        {
+          "name": "Update Blob Config",
+          "description": "Update blob_tag/version/account/limit/note via Invoke Blob (blobparts test)",
+          "TransactionType": "Invoke",
+          "Blob": [
+            {
+              "type": "ascii",
+              "value": "CONF"
+            },
+            {
+              "type": "userConfig",
+              "value": "{{blobVersion}}"
+            },
+            {
+              "type": "userConfig",
+              "value": "{{newBlobAccount}}"
+            },
+            {
+              "type": "userConfig",
+              "value": "{{newBlobLimit}}"
+            },
+            {
+              "type": "userConfig",
+              "value": "{{newBlobNote}}"
+            }
+          ],
+          "userConfig": {
+            "blobVersion": {
+              "label": "Blob Version",
+              "inputType": "uint8",
+              "encoding": "uint8",
+              "default": "1",
+              "description": "Single-byte version in Blob.",
+              "required": true
+            },
+            "newBlobAccount": {
+              "label": "Blob Account",
+              "inputType": "account",
+              "encoding": "hex",
+              "default": "rNybLYJ4koM8PF3dJbyUZhrgYntGxf1nEk",
+              "description": "Account embedded in Blob (stored in blob_account).",
+              "required": true
+            },
+            "newBlobLimit": {
+              "label": "Blob Limit (drops)",
+              "inputType": "uint64",
+              "encoding": "uint64",
+              "endianness": "BE",
+              "default": "1000000",
+              "description": "Big-endian uint64 stored in blob_limit.",
+              "required": true
+            },
+            "newBlobNote": {
+              "label": "Blob Note",
+              "inputType": "string",
+              "encoding": "utf8",
+              "default": "Updated blob note",
+              "description": "Trailing text stored in blob_note.",
+              "required": false
+            }
           }
         }
       ]
