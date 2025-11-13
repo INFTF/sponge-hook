@@ -72,7 +72,7 @@
       "encoding": "utf8",
       "default": "1000000",
       "description": "Limit value for hp_limit, stored as ascii string.",
-      "required": false
+      "required": true
     },
     "hp_note_text": {
       "label": "Note (ascii/utf8)",
@@ -80,7 +80,7 @@
       "encoding": "utf8",
       "default": "Param sponge test",
       "description": "Note text for hp_note.",
-      "required": false
+      "required": true
     },
     "tp_count_value": {
       "label": "tp_count Value",
@@ -88,7 +88,7 @@
       "encoding": "utf8",
       "default": "42",
       "description": "Numeric value passed as tp_count (ascii).",
-      "required": false
+      "required": true
     },
     "tp_label_text": {
       "label": "tp_label Text",
@@ -96,7 +96,7 @@
       "encoding": "utf8",
       "default": "Hello ABI",
       "description": "Text passed as tp_label.",
-      "required": false
+      "required": true
     },
     "blobLimit": {
       "label": "Blob Limit (drops)",
@@ -113,7 +113,7 @@
       "encoding": "utf8",
       "default": "Hello from blob",
       "description": "Trailing note text inside Blob.",
-      "required": false
+      "required": true
     }
   },
 
