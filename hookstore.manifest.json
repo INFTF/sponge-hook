@@ -38,7 +38,6 @@
       "HookCanEmit": [],
       "HookNamespace": "0000000000000000000000000000000000000000000000000000000000000000",
       "abi": {
-        "notes": "Auto-generated from manifest and code analysis",
         "hookParameters": [
           {
             "name": "hp_admin",
@@ -48,9 +47,8 @@
                 "pattern": "hp_admin",
                 "byteLength": 8,
                 "patternEncoding": "ascii",
-                "exclude": true,
-                "notes": "Parameter name as stored on-ledger"
-              }
+                "exclude": true
+                            }
             ],
             "data": [
               {
@@ -67,13 +65,12 @@
                 "pattern": "hp_limit",
                 "byteLength": 8,
                 "patternEncoding": "ascii",
-                "exclude": true,
-                "notes": "Parameter name as stored on-ledger"
+                "exclude": true
               }
             ],
             "data": [
               {
-                "type": "Blob"
+                "type": "VarString"
               }
             ]
           },
@@ -85,13 +82,12 @@
                 "pattern": "hp_note",
                 "byteLength": 7,
                 "patternEncoding": "ascii",
-                "exclude": true,
-                "notes": "Parameter name as stored on-ledger"
+                "exclude": true
               }
             ],
             "data": [
               {
-                "type": "Blob"
+                "type": "VarString"
               }
             ]
           }
@@ -107,8 +103,7 @@
               {
                 "type": "VarString",
                 "pattern": "Blob",
-                "exclude": true,
-                "notes": "sfBlob field selector"
+                "exclude": true
               }
             ],
             "data": [
@@ -126,10 +121,12 @@
                 "byteLength": 20
               },
               {
-                "type": "Blob"
+                "type": "UInt64",
+                "endianness": "BE",
+                "byteLength": 8
               },
               {
-                "type": "Blob"
+                "type": "VarString"
               }
             ]
           },
@@ -141,8 +138,7 @@
                 "pattern": "tp_sender",
                 "byteLength": 9,
                 "patternEncoding": "ascii",
-                "exclude": true,
-                "notes": "Parameter name as stored on-ledger"
+                "exclude": true
               }
             ],
             "data": [
@@ -163,13 +159,12 @@
                 "pattern": "tp_count",
                 "byteLength": 8,
                 "patternEncoding": "ascii",
-                "exclude": true,
-                "notes": "Parameter name as stored on-ledger"
+                "exclude": true
               }
             ],
             "data": [
               {
-                "type": "Blob"
+                "type": "VarString"
               }
             ],
             "transactionTypes": [
@@ -184,17 +179,174 @@
                 "pattern": "tp_label",
                 "byteLength": 8,
                 "patternEncoding": "ascii",
-                "exclude": true,
-                "notes": "Parameter name as stored on-ledger"
+                "exclude": true
               }
             ],
             "data": [
               {
-                "type": "Blob"
+                "type": "VarString"
               }
             ],
             "transactionTypes": [
               "Invoke"
+            ]
+          }
+        ],
+        "hookStates": [
+          {
+            "name": "tp_sender",
+            "description": "State key: \"tp_sender\" (matches otxnParameter)",
+            "selector": [
+              {
+                "type": "Blob",
+                "byteLength": 9,
+                "label": "tp_sender",
+                "pattern": "tp_sender",
+                "patternEncoding": "ascii"
+              }
+            ],
+            "data": [
+              {
+                "type": "AccountID",
+                "label": "StateValue"
+              }
+            ]
+          },
+          {
+            "name": "tp_count",
+            "description": "State key: \"tp_count\" (matches otxnParameter)",
+            "selector": [
+              {
+                "type": "Blob",
+                "byteLength": 9,
+                "label": "tp_count",
+                "pattern": "tp_count",
+                "patternEncoding": "ascii"
+              }
+            ],
+            "data": [
+              {
+                "type": "VarString",
+                "label": "StateValue"
+              }
+            ]
+          },
+          {
+            "name": "tp_label",
+            "description": "State key: \"tp_label\" (matches otxnParameter)",
+            "selector": [
+              {
+                "type": "Blob",
+                "byteLength": 9,
+                "label": "tp_label",
+                "pattern": "tp_label",
+                "patternEncoding": "ascii"
+              }
+            ],
+            "data": [
+              {
+                "type": "VarString",
+                "label": "StateValue"
+              }
+            ]
+          },
+          {
+            "name": "blob_tag",
+            "description": "State key: \"blob_tag\"",
+            "notes": "Found state_set() with 8-byte key and 4-byte value at sponge.c:168. Key name: \"blob_tag\". Manual review required.",
+            "selector": [
+              {
+                "type": "Blob",
+                "byteLength": 8,
+                "label": "blob_tag",
+                "pattern": "blob_tag",
+                "patternEncoding": "ascii"
+              }
+            ],
+            "data": [
+              {
+                "type": "VarString",
+                "label": "StateValue"
+              }
+            ]
+          },
+          {
+            "name": "blob_version",
+            "description": "State key: \"blob_version\"",
+            "notes": "Found state_set() with 12-byte key and 1-byte value at sponge.c:174. Key name: \"blob_version\". Manual review required.",
+            "selector": [
+              {
+                "type": "Blob",
+                "byteLength": 12,
+                "label": "blob_version",
+                "pattern": "blob_version",
+                "patternEncoding": "ascii"
+              }
+            ],
+            "data": [
+              {
+                "type": "UInt8",
+                "label": "StateValue"
+              }
+            ]
+          },
+          {
+            "name": "blob_account",
+            "description": "State key: \"blob_account\"",
+            "notes": "Found state_set() with 12-byte key and 20-byte value at sponge.c:180. Key name: \"blob_account\". Manual review required.",
+            "selector": [
+              {
+                "type": "Blob",
+                "byteLength": 12,
+                "label": "blob_account",
+                "pattern": "blob_account",
+                "patternEncoding": "ascii"
+              }
+            ],
+            "data": [
+              {
+                "type": "AccountID",
+                "label": "StateValue"
+              }
+            ]
+          },
+          {
+            "name": "blob_limit",
+            "description": "State key: \"blob_limit\"",
+            "selector": [
+              {
+                "type": "Blob",
+                "byteLength": 10,
+                "label": "blob_limit",
+                "pattern": "blob_limit",
+                "patternEncoding": "ascii"
+              }
+            ],
+            "data": [
+              {
+                "type": "UInt64",
+                "label": "StateValue"
+              }
+            ]
+          },
+          {
+            "name": "blob_note",
+            "description": "State key: \"blob_note\"",
+            "selector": [
+              {
+                "type": "Blob",
+                "byteLength": 9,
+                "label": "blob_note",
+                "pattern": "blob_note",
+                "patternEncoding": "ascii"
+              }
+            ],
+            "data": [
+              {
+                "type": "VarString",
+                "label": "StateValue",
+                "notes": "Variable length value (determined at runtime)"
+              }
             ]
           }
         ]
