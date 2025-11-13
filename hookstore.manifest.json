@@ -1,0 +1,184 @@
+{
+  "manifestVersion": "1",
+  "name": "sponge-hook",
+  "version": "1.0.0",
+  "description": "Test hook for Hookstore/ABI: otxn_params + blobparts -> state",
+  "publisher": "rNybLYJ4koM8PF3dJbyUZhrgYntGxf1nEk",
+  "repo": "https://github.com/INFTF/sponge-hook",
+  "license": "MIT",
+  "networks": ["xahau-testnet"],
+
+  "roles": {
+    "installer": {
+      "label": "Installer Account",
+      "description": "Account that installs and invokes the hook"
+    },
+    "admin": {
+      "label": "Admin Account",
+      "description": "Account to be used for hp_admin"
+    },
+    "sender": {
+      "label": "Sender Account",
+      "description": "Account to be used for tp_sender"
+    },
+    "blobAccount": {
+      "label": "Blob Account",
+      "description": "Account to be used for blobAccount"
+    }
+  },
+
+  "hooks": [
+    {
+      "id": "main",
+      "artifact": {
+        "toolchain": "hooks-c",
+        "source_path": "src/param_sponge_blob.c"
+      },
+      "HookOn": ["INVOKE"],
+      "HookCanEmit": [],
+      "HookNamespace": "0000000000000000000000000000000000000000000000000000000000000000",
+
+      "HookParameters": [
+        {
+          "HookParameterName": "hp_admin",
+          "HookParameterValue": {
+            "type": "account",
+            "value": "{{admin}}",
+            "encoding": "hex"
+          }
+        },
+        {
+          "HookParameterName": "hp_limit",
+          "HookParameterValue": {
+            "type": "userConfig",
+            "value": "{{hp_limit_value}}"
+          }
+        },
+        {
+          "HookParameterName": "hp_note",
+          "HookParameterValue": {
+            "type": "userConfig",
+            "value": "{{hp_note_text}}"
+          }
+        }
+      ]
+    }
+  ],
+
+  "userConfig": {
+    "hp_limit_value": {
+      "label": "Limit (ascii)",
+      "inputType": "string",
+      "encoding": "utf8",
+      "default": "1000000",
+      "description": "Limit value for hp_limit, stored as ascii string.",
+      "required": false
+    },
+    "hp_note_text": {
+      "label": "Note (ascii/utf8)",
+      "inputType": "string",
+      "encoding": "utf8",
+      "default": "Param sponge test",
+      "description": "Note text for hp_note.",
+      "required": false
+    },
+    "tp_count_value": {
+      "label": "tp_count Value",
+      "inputType": "string",
+      "encoding": "utf8",
+      "default": "42",
+      "description": "Numeric value passed as tp_count (ascii).",
+      "required": false
+    },
+    "tp_label_text": {
+      "label": "tp_label Text",
+      "inputType": "string",
+      "encoding": "utf8",
+      "default": "Hello ABI",
+      "description": "Text passed as tp_label.",
+      "required": false
+    },
+    "blobLimit": {
+      "label": "Blob Limit (drops)",
+      "inputType": "uint64",
+      "encoding": "uint64",
+      "endianness": "BE",
+      "default": "1000000",
+      "description": "Big-endian uint64 limit inside Blob.",
+      "required": true
+    },
+    "blobNote": {
+      "label": "Blob Note",
+      "inputType": "string",
+      "encoding": "utf8",
+      "default": "Hello from blob",
+      "description": "Trailing note text inside Blob.",
+      "required": false
+    }
+  },
+
+  "install": [
+    {
+      "TransactionType": "SetHook",
+      "description": "Install param_sponge_blob hook",
+      "required": true,
+      "role": "installer",
+      "hookIds": ["main"]
+    },
+    {
+      "TransactionType": "Invoke",
+      "description": "Invoke hook with otxn_params + structured Blob",
+      "required": true,
+      "role": "installer",
+
+      "HookParameters": [
+        {
+          "HookParameterName": "tp_sender",
+          "HookParameterValue": {
+            "type": "account",
+            "value": "{{sender}}",
+            "encoding": "hex"
+          }
+        },
+        {
+          "HookParameterName": "tp_count",
+          "HookParameterValue": {
+            "type": "userConfig",
+            "value": "{{tp_count_value}}"
+          }
+        },
+        {
+          "HookParameterName": "tp_label",
+          "HookParameterValue": {
+            "type": "userConfig",
+            "value": "{{tp_label_text}}"
+          }
+        }
+      ],
+
+      "Blob": [
+        {
+          "type": "ascii",
+          "value": "CONF"
+        },
+        {
+          "type": "uint8",
+          "value": 1
+        },
+        {
+          "type": "account",
+          "value": "{{blobAccount}}",
+          "encoding": "hex"
+        },
+        {
+          "type": "userConfig",
+          "value": "{{blobLimit}}"
+        },
+        {
+          "type": "userConfig",
+          "value": "{{blobNote}}"
+        }
+      ]
+    }
+  ]
+}
