@@ -1,0 +1,21 @@
+name: Hookstore Re-verification
+
+on:
+  push:
+  release:
+    types: [published]
+
+jobs:
+  reverify:
+    name: Re-verify Hook
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Re-verify Hook
+        uses: Xahau/reverify-hook@v1
+        with:
+          api_key: ${{ secrets.HOOKSTORE_API_KEY }}
+          wait_for_completion: false  # Set to true to block until verification completes
