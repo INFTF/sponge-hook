@@ -36,7 +36,7 @@
       },
       "HookOn": ["INVOKE"],
       "HookCanEmit": [],
-      "HookNamespace": "0000000000000000000000000000000000000000000000000000000000000000",
+      "HookNamespace": "90D237400EA27B04C8AD729C6DED1983A6D84872A714BAB582E6345D273A0A35",
       "abi": {
         "hookParameters": [
           {
