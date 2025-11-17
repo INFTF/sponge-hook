@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v4
       
       - name: Re-verify Hook
-        uses: Xahau/reverify-hook@v1
+        uses: Xahau/reverify-hook@v1.0.2
         with:
           api_key: ${{ secrets.HOOKSTORE_API_KEY }}
           wait_for_completion: false  # Set to true to block until verification completes
